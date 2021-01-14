@@ -2,6 +2,7 @@ package algorithms
 
 import (
 	"errors"
+	"strings"
 )
 
 const hexValues = "0123456789abcdef"
@@ -26,6 +27,8 @@ func DecodeFromHex(input string) ([]byte, error) {
 		return nil, errors.New("Cannot decode odd number of hex values.")
 	}
 
+	input = strings.ToLower(input)
+
 	for i := 0; i < len(input); i += 2 {
 		// mostSigBits := input[i]
 		// leastSigBits := input[i + 1]
@@ -33,4 +36,16 @@ func DecodeFromHex(input string) ([]byte, error) {
 	}
 
 	return nil, nil
+}
+
+func getByteFromHexChar(hexChar byte) byte {
+	if (hexChar >= 0x30 && hexChar <= 0x39) {
+		// Numbers 0-9
+		return hexChar - byte(0x30)
+	} else if (hexChar >= 0x61 && hexChar <= 0x66) {
+		// Letters a-f
+		return hexChar - byte(0x61) + 10
+	}
+
+	return byte(0)
 }
