@@ -10,6 +10,10 @@ const hexValues = "0123456789abcdef"
 func EncodeHex(input []byte) (string, error) {
 	var output string
 
+	if input == nil {
+		return output, errors.New("Nil input.")
+	}
+
 	for i := 0; i < len(input); i += 1 {
 		mostSigBits := (input[i] & byte(0xf0)) >> 4
 		leastSigBits := input[i] & byte(0xf)
