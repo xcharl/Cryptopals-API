@@ -28,24 +28,26 @@ func DecodeHex(input string) ([]byte, error) {
 	}
 
 	input = strings.ToLower(input)
+	var output []byte
 
 	for i := 0; i < len(input); i += 2 {
-		// mostSigBits := input[i]
-		// leastSigBits := input[i + 1]
-
+		mostSigBits := input[i] << 4
+		leastSigBits := input[i + 1]
+		currByte := mostSigBits | leastSigBits
+		output[i/2] = currByte
 	}
 
-	return nil, nil
+	return output, nil
 }
 
-func getByteFromHexChar(hexChar byte) byte {
+func getByteFromHexChar(hexChar byte) (byte, error) {
 	if hexChar >= 0x30 && hexChar <= 0x39 {
 		// Numbers 0-9
-		return hexChar - byte(0x30)
+		return hexChar - byte(0x30), nil
 	} else if hexChar >= 0x61 && hexChar <= 0x66 {
 		// Letters a-f
-		return hexChar - byte(0x61) + 10
+		return hexChar - byte(0x61) + 10, nil
 	}
 
-	return byte(0)
+	return 0, errors.New("Hex character not recognised.")
 }
