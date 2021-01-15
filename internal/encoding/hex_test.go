@@ -5,49 +5,30 @@ import (
 	"github.com/stretchr/testify/assert"
 )
 
-// type encodeHexTestCase struct {
-// 	input []byte
-// 	expected string
-// 	output string
-// 	errExpected bool
-// }
-
-func TestEncodeHexNilInputReturnsEmptyString(t *testing.T) {
-	expected := ""
-
-	var input []byte
-	actual, err := EncodeHex(input)
-	
-	assert.Nil(t, err)
-	assert.Equal(t, expected, actual)
+type encodeTestCase struct {
+	input []byte
+	expected string
+	errExpected bool
 }
 
-func TestEncodeHexFf(t *testing.T) {
-	expected := "ff"
+func TestEncodeHex(t *testing.T) {
+	encodeTestCases := []encodeTestCase {
+		encodeTestCase { nil, "", true, },
+		encodeTestCase { []byte{}, "", false, },
+		encodeTestCase { []byte{0xff}, "ff", false, },
+		encodeTestCase { []byte{00}, "00", false, },
+		encodeTestCase { []byte{0x26, 0xab, 0x36, 0xff}, "26ab36ff", false, },
+	}
 
-	input := []byte{0xff}
-	actual, err := EncodeHex(input)
+	for _, test := range encodeTestCases {
+		actual, err := EncodeHex(test.input)
 
-	assert.Nil(t, err)
-	assert.Equal(t, expected, actual)
-}
+		assert.Equal(t, test.expected, actual)
 
-func TestEncodeHex00(t *testing.T) {
-	expected := "00"
-
-	input := []byte{0x00}
-	actual, err := EncodeHex(input)
-
-	assert.Nil(t, err)
-	assert.Equal(t, expected, actual)
-}
-
-func TestEncodeHexRandomBytes(t *testing.T) {
-	expected := "26ab36ff"
-
-	input := []byte{0x26, 0xab, 0x36, 0xff}
-	actual, err := EncodeHex(input)
-
-	assert.Nil(t, err)
-	assert.Equal(t, expected, actual)
+		if (test.errExpected) {
+			assert.Error(t, err)
+		} else {
+			assert.Nil(t, err)
+		}
+	}
 }
