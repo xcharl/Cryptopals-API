@@ -4,8 +4,7 @@ import (
 	"encoding/base64"
 	"encoding/hex"
 	"fmt"
-
-	"../internal/algorithms/"
+	"github.com/xcharl/Cryptopals-API/internal/encoding"
 )
 
 func main() {
@@ -15,7 +14,7 @@ func main() {
 	base64.StdEncoding.EncodeToString([]byte("hello"))
 
 	x, err := hex.DecodeString("ff0d44ef")
-	y, _ := algorithms.EncodeToHex(x)
+	y, _ := encoding.EncodeHex(x)
 
 	fmt.Println(err)
 	fmt.Println(y)

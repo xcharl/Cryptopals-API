@@ -1,1 +1,1 @@
-package algorithms
+package encoding

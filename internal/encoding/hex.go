@@ -1,4 +1,4 @@
-package algorithms
+package encoding
 
 import (
 	"errors"
@@ -7,7 +7,7 @@ import (
 
 const hexValues = "0123456789abcdef"
 
-func Encode(input []byte) (string, error) {
+func EncodeHex(input []byte) (string, error) {
 	var output string
 
 	for i := 0; i < len(input); i += 1 {
@@ -22,7 +22,7 @@ func Encode(input []byte) (string, error) {
 	return output, nil
 }
 
-func Decode(input string) ([]byte, error) {
+func DecodeHex(input string) ([]byte, error) {
 	if len(input)%2 != 0 {
 		return nil, errors.New("Cannot decode odd number of hex values.")
 	}
