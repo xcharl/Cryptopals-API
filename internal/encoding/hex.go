@@ -7,7 +7,7 @@ import (
 
 const hexValues = "0123456789abcdef"
 
-func EncodeToHex(input []byte) (string, error) {
+func Encode(input []byte) (string, error) {
 	var output string
 
 	for i := 0; i < len(input); i += 1 {
@@ -22,7 +22,7 @@ func EncodeToHex(input []byte) (string, error) {
 	return output, nil
 }
 
-func DecodeFromHex(input string) ([]byte, error) {
+func Decode(input string) ([]byte, error) {
 	if len(input)%2 != 0 {
 		return nil, errors.New("Cannot decode odd number of hex values.")
 	}
@@ -39,10 +39,10 @@ func DecodeFromHex(input string) ([]byte, error) {
 }
 
 func getByteFromHexChar(hexChar byte) byte {
-	if (hexChar >= 0x30 && hexChar <= 0x39) {
+	if hexChar >= 0x30 && hexChar <= 0x39 {
 		// Numbers 0-9
 		return hexChar - byte(0x30)
-	} else if (hexChar >= 0x61 && hexChar <= 0x66) {
+	} else if hexChar >= 0x61 && hexChar <= 0x66 {
 		// Letters a-f
 		return hexChar - byte(0x61) + 10
 	}

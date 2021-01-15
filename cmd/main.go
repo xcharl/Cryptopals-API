@@ -4,7 +4,8 @@ import (
 	"encoding/base64"
 	"encoding/hex"
 	"fmt"
-	"./algorithms"
+
+	"../internal/algorithms/"
 )
 
 func main() {
@@ -15,8 +16,6 @@ func main() {
 
 	x, err := hex.DecodeString("ff0d44ef")
 	y, _ := algorithms.EncodeToHex(x)
-
-
 
 	fmt.Println(err)
 	fmt.Println(y)
